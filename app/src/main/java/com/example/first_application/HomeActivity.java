@@ -7,18 +7,28 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+
+import Adapter.RecyclerAdapter;
+import classes.TableItems;
 import mydb.*;
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.snackbar.Snackbar;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class HomeActivity extends AppCompatActivity {
 TextView username,logout;
 EditText ETname, ETemail;
+RecyclerAdapter ra ;
+
 
 MyDatabase db;
 Button BTNSave;
@@ -33,6 +43,7 @@ Button BTNSave;
             return insets;
         });
         Intent intent = getIntent();
+        db = new MyDatabase(this);
 
         username = findViewById(R.id.edText);
         logout = findViewById(R.id.txLogout);
@@ -43,7 +54,14 @@ Button BTNSave;
         username.setText(intent.getStringExtra("u_name"));
         SharedPreferences sp = getSharedPreferences("user",MODE_PRIVATE);
 
-        db = new MyDatabase(this);
+        RecyclerView rv = findViewById(R.id.tabledata);
+        rv.setLayoutManager(new LinearLayoutManager(this));
+
+        ra = new RecyclerAdapter(new ArrayList<>());
+        rv.setAdapter(ra);
+        loadData();
+
+
         logout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -68,7 +86,13 @@ Button BTNSave;
             else {
                 Snackbar.make(view,"priblem inserting record...",Snackbar.LENGTH_LONG).show();
             }
+            loadData();
         });
 
+    }
+
+    private void loadData() {
+        List<TableItems> l = db.getDataList();
+        ra.updateData(l);
     }
 }

@@ -45,6 +45,7 @@
         app:cardElevation="10dp"
         app:cardBackgroundColor="#E8E0FF"
         android:layout_marginTop="10dp"
+        android:id="@+id/card"
         android:outlineAmbientShadowColor="@color/cardview_shadow_start_color">
         <LinearLayout
             android:layout_width="match_parent"
@@ -83,6 +84,20 @@
                 />
         </LinearLayout>
     </com.google.android.material.card.MaterialCardView>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_marginTop="5dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:id="@+id/tabledata"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        tools:listitem="@layout/recycler_layout"
+        tools:itemCount="5"
+        android:nestedScrollingEnabled="false"
+        app:layout_constraintBottom_toTopOf="@id/bottom"
+        app:layout_constraintTop_toBottomOf="@id/card"
+        app:layout_constraintStart_toEndOf="@id/start"
+        app:layout_constraintEnd_toStartOf="@id/end"/>
 
     <androidx.constraintlayout.helper.widget.Grid
         android:layout_width="match_parent"

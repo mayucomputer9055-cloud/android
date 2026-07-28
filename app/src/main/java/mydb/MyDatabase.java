@@ -7,6 +7,11 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import classes.TableItems;
+
 public  class MyDatabase extends SQLiteOpenHelper {
     public static final String DATABASE_NAME = "Users.db";
     public static final int DATABASE_VERSION = 1;
@@ -68,5 +73,27 @@ public  class MyDatabase extends SQLiteOpenHelper {
     {
         SQLiteDatabase db = this.getReadableDatabase();
         return db.rawQuery("SELECT * FROM " + TABLE_NAME, null);
+    }
+
+    public List<TableItems> getDataList()
+    {
+        List<TableItems> ti = new ArrayList<>();
+        Cursor c = getData();
+
+        if(c.moveToFirst())
+        {
+            do
+            {
+
+                String id,name,email;
+                id = c.getString(c.getColumnIndexOrThrow(COL1));
+                name = c.getString(c.getColumnIndexOrThrow(COL2));
+                email = c.getString(c.getColumnIndexOrThrow(COL3));
+                Log.d("1001",id + " " + name);
+                ti.add(new TableItems(id,name,email));
+            }while (c.moveToNext());
+        }
+        c.close();
+        return ti;
     }
 }
