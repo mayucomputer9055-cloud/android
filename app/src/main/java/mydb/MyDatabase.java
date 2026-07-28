@@ -50,7 +50,7 @@ public  class MyDatabase extends SQLiteOpenHelper {
         return res != -1;
     }
 
-    boolean updateData(String id, String name, String email)
+    public boolean updateData(String id, String name, String email)
     {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
@@ -62,7 +62,7 @@ public  class MyDatabase extends SQLiteOpenHelper {
 
     }
 
-    boolean deleteData(String id)
+    public boolean deleteData(String id)
     {
         SQLiteDatabase db = this.getWritableDatabase();
         int res = db.delete(TABLE_NAME,COL1 + "=?", new String[]{id});

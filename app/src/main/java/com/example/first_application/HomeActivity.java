@@ -26,12 +26,14 @@ import java.util.List;
 
 public class HomeActivity extends AppCompatActivity {
 TextView username,logout;
-EditText ETname, ETemail;
+EditText ETname, ETemail, ETid;
 RecyclerAdapter ra ;
 
 
 MyDatabase db;
-Button BTNSave;
+Button BTNSave, BTNUpdate, BTNDelete, BTNClear;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,7 +51,11 @@ Button BTNSave;
         logout = findViewById(R.id.txLogout);
         ETemail = findViewById(R.id.edEmail);
         ETname = findViewById(R.id.edName);
+        ETid = findViewById(R.id.edId);
         BTNSave = findViewById(R.id.btnSave);
+        BTNUpdate = findViewById(R.id.btnUpdate);
+        BTNDelete = findViewById(R.id.btnDelete);
+        BTNClear = findViewById(R.id.btnclear);
 
         username.setText(intent.getStringExtra("u_name"));
         SharedPreferences sp = getSharedPreferences("user",MODE_PRIVATE);
@@ -87,12 +93,61 @@ Button BTNSave;
                 Snackbar.make(view,"priblem inserting record...",Snackbar.LENGTH_LONG).show();
             }
             loadData();
+            ClearEditText();
         });
+
+        BTNDelete.setOnClickListener(view ->{
+
+            String id = ETid.getText().toString();
+
+           boolean r = db.deleteData(id);
+
+           if(r)
+           {
+               Snackbar.make(view,"Record id: "+id+" deleted.......",Snackbar.LENGTH_LONG).show();
+               ClearEditText();
+               loadData();
+           }
+
+
+
+        });
+
+        BTNUpdate.setOnClickListener(view ->{
+            String id,name,email;
+            id = ETid.getText().toString();
+            name = ETname.getText().toString();
+            email = ETemail.getText().toString();
+
+            boolean r = db.updateData(id,name,email);
+
+            if(r)
+            {
+                Snackbar.make(view,"id  : "+id +" updated...",Snackbar.LENGTH_LONG).show();
+                ClearEditText();
+                loadData();
+            }
+
+
+        });
+
+        BTNClear.setOnClickListener( view->{
+            ClearEditText();
+        });
+
 
     }
 
     private void loadData() {
         List<TableItems> l = db.getDataList();
         ra.updateData(l);
+    }
+
+    //to clear edittext data
+    private void ClearEditText()
+    {
+        ETemail.setText("");
+        ETid.setText("");
+        ETname.setText("");
     }
 }
