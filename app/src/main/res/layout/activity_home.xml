@@ -17,25 +17,100 @@
         android:textColor="#1D2C57"
         android:textSize="20dp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintStart_toEndOf="@id/start"
+        app:layout_constraintTop_toBottomOf="@id/top" />
 
     <TextView
         android:id="@+id/txLogout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="328dp"
-        android:layout_marginTop="804dp"
+        android:background="?android:attr/selectableItemBackground"
         android:clickable="false"
         android:elevation="5dp"
         android:shadowColor="@color/cardview_shadow_end_color"
         android:text="Logout"
         android:textColor="#64B5F6"
         android:textStyle="bold"
-        android:background="?android:attr/selectableItemBackground"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintEnd_toStartOf="@id/end"
+        app:layout_constraintTop_toBottomOf="@id/top" />
+
+    <com.google.android.material.card.MaterialCardView
+        app:layout_constraintTop_toBottomOf="@id/edText"
+        app:layout_constraintStart_toEndOf="@id/start"
+        app:layout_constraintEnd_toStartOf="@id/end"
+        app:layout_constraintBottom_toTopOf="@id/end"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:elevation="10dp"
+        app:cardElevation="10dp"
+        app:cardBackgroundColor="#E8E0FF"
+        android:layout_marginTop="10dp"
+        android:outlineAmbientShadowColor="@color/cardview_shadow_start_color">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:background="@color/transparent">
+            <EditText
+                android:id="@+id/edName"
+                android:layout_marginTop="20dp"
+                android:layout_width="350dp"
+                android:layout_height="30dp"
+                android:hint="Name"
+                android:paddingStart="10dp"
+                android:maxLines="1"
+                android:background="@drawable/edittext_background"
+                tools:ignore="RtlSymmetry" />
+            <EditText
+                android:id="@+id/edEmail"
+                android:layout_width="350dp"
+                android:layout_height="30dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/edittext_background"
+                android:hint="Email"
+                android:paddingStart="10dp"
+                android:maxLines="1"
+                tools:ignore="RtlSymmetry" />
+
+            <Button
+                android:id="@+id/btnSave"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="save"
+                android:layout_marginTop="30dp"
+                android:layout_marginBottom="20dp"
+                />
+        </LinearLayout>
+    </com.google.android.material.card.MaterialCardView>
+
+    <androidx.constraintlayout.helper.widget.Grid
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:id="@+id/top"
+        app:layout_constraintGuide_percent="0.02"
+        />
+    <androidx.constraintlayout.helper.widget.Grid
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:id="@+id/bottom"
+        app:layout_constraintGuide_percent="0.98"
+        />
+    <androidx.constraintlayout.helper.widget.Grid
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:id="@+id/start"
+        app:layout_constraintGuide_percent="0.02"
+        />
+    <androidx.constraintlayout.helper.widget.Grid
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:id="@+id/end"
+        app:layout_constraintGuide_percent="0.98"
+        />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

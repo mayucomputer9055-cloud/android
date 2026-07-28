@@ -4,16 +4,24 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
-
+import mydb.*;
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.google.android.material.snackbar.Snackbar;
+
 public class HomeActivity extends AppCompatActivity {
 TextView username,logout;
+EditText ETname, ETemail;
+
+MyDatabase db;
+Button BTNSave;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -28,10 +36,14 @@ TextView username,logout;
 
         username = findViewById(R.id.edText);
         logout = findViewById(R.id.txLogout);
-        username.setText(intent.getStringExtra("u_name"));
+        ETemail = findViewById(R.id.edEmail);
+        ETname = findViewById(R.id.edName);
+        BTNSave = findViewById(R.id.btnSave);
 
+        username.setText(intent.getStringExtra("u_name"));
         SharedPreferences sp = getSharedPreferences("user",MODE_PRIVATE);
 
+        db = new MyDatabase(this);
         logout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -43,5 +55,20 @@ TextView username,logout;
                 finish();
             }
         });
+
+        BTNSave.setOnClickListener(view -> {
+            String Sname = ETname.getText().toString();
+            String Semail = ETemail.getText().toString();
+
+            boolean inserted = db.insertData(Sname,Semail);
+            if(inserted)
+            {
+                Snackbar.make(view,"record inserted...",Snackbar.LENGTH_LONG).show();
+            }
+            else {
+                Snackbar.make(view,"priblem inserting record...",Snackbar.LENGTH_LONG).show();
+            }
+        });
+
     }
 }
