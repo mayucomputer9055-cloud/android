@@ -32,7 +32,7 @@ public class SplashScreen extends AppCompatActivity {
             Intent i;
             if (login)
             {
-                i = new Intent(SplashScreen.this, HomeActivity.class);
+                i = new Intent(SplashScreen.this, OptionsView.class);
                 i.putExtra("u_name",uname);
                 startActivity(i);
             }

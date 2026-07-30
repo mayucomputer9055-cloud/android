@@ -12,6 +12,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.First_application">
         <activity
+            android:name=".DatePicker"
+            android:exported="false" />
+        <activity
+            android:name=".OptionsView"
+            android:exported="false" />
+        <activity
             android:name=".HomeActivity"
             android:exported="false" />
         <activity
@@ -28,7 +34,7 @@
             android:exported="false" />
         <activity
             android:name=".MainActivity"
-            android:exported="false"></activity>
+            android:exported="false" />
     </application>
 
 </manifest>
