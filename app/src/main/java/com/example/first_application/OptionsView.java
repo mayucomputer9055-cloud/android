@@ -1,13 +1,18 @@
 package com.example.first_application;
 
+import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.DatePicker;
 import android.widget.ListView;
 
 import androidx.activity.EdgeToEdge;
+import androidx.activity.OnBackPressedCallback;
+import androidx.activity.OnBackPressedDispatcherOwner;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
@@ -16,6 +21,7 @@ import androidx.core.view.WindowInsetsCompat;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 public class OptionsView extends AppCompatActivity {
@@ -32,7 +38,7 @@ public class OptionsView extends AppCompatActivity {
         });
 
         ListView lv = findViewById(R.id.list_view);
-        String[] options = {"database", "DatePicker"};
+        String[] options = {"database", "DatePicker","DatepickerDialouge"};
 
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, androidx.appcompat.R.layout.support_simple_spinner_dropdown_item,options);
 
@@ -53,7 +59,41 @@ public class OptionsView extends AppCompatActivity {
                         startActivity(intent);
                         break;
                     }
+                    case "DatePicker":
+                    {
+                        startActivity(new Intent(OptionsView.this, Datepicker.class));
+                        break;
+                    }
+                    case "DatepickerDialouge":
+                    {
+                        Calendar cal = Calendar.getInstance();
+                        int year = cal.get(Calendar.YEAR), month = cal.get(Calendar.MONTH), day = cal.get(Calendar.DAY_OF_MONTH);
+                        new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
+                            @Override
+                            public void onDateSet(DatePicker datePicker, int i, int i1, int i2) {
+                                Snackbar.make(view,)
+                            }
+                        },year,month,day).show();
+                        break;
+                    }
                 }
+            }
+        });
+
+        getOnBackPressedDispatcher().addCallback(this, new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                new AlertDialog.Builder(OptionsView.this)
+                        .setMessage("Alert Dialog")
+                        .setTitle("Alert")
+                        .setPositiveButton("yes", (dialog,which)->{
+                            finish();
+                        })
+                        .setNegativeButton("No", (dialog, which)->{
+                            dialog.dismiss();
+                        })
+                        .create()
+                        .show();
             }
         });
     }
